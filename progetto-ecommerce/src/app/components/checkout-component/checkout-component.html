@@ -1,0 +1,116 @@
+<div class="checkout-page">
+<a routerLink="/carrello" class="back-link">← Torna al carrello</a>
+
+@if (orderDone()) {
+  <div class="order-success">
+    <div class="success-icon">✓</div>
+    <h2>Ordine confermato!</h2>
+    <p>Il tuo ordine n° <strong>{{ orderId() }}</strong> è stato ricevuto.</p>
+    <p>Riceverai una email di conferma all'indirizzo indicato.</p>
+    <a routerLink="/" class="btn-home">Torna al negozio</a>
+  </div>
+} @else {
+  <div class="checkout-grid">
+    <div class="checkout-form-wrap">
+      <h2 class="checkout-title">Dati di spedizione</h2>
+
+      <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()" class="checkout-form" novalidate>
+
+        <div class="field-row">
+          <div class="field" [class.invalid]="isInvalid('firstName')">
+            <label>Nome *</label>
+            <input formControlName="firstName" type="text" placeholder="Mario" />
+            @if (isInvalid('firstName')) {
+              <span class="err">Campo obbligatorio</span>
+            }
+          </div>
+          <div class="field" [class.invalid]="isInvalid('lastName')">
+            <label>Cognome *</label>
+            <input formControlName="lastName" type="text" placeholder="Rossi" />
+            @if (isInvalid('lastName')) {
+              <span class="err">Campo obbligatorio</span>
+            }
+          </div>
+        </div>
+
+        <div class="field" [class.invalid]="isInvalid('email')">
+          <label>Email *</label>
+          <input formControlName="email" type="email" placeholder="mario@esempio.it" />
+          @if (isInvalid('email') && checkoutForm.get('email')?.errors?.['required']) {
+            <span class="err">Email obbligatoria</span>
+          }
+          @if (isInvalid('email') && checkoutForm.get('email')?.errors?.['email']) {
+            <span class="err">Email non valida</span>
+          }
+        </div>
+
+        <div class="field" [class.invalid]="isInvalid('address')">
+          <label>Indirizzo *</label>
+          <input formControlName="address" type="text" placeholder="Via Roma 1" />
+          @if (isInvalid('address')) {
+            <span class="err">Campo obbligatorio</span>
+          }
+        </div>
+
+        <div class="field-row">
+          <div class="field" [class.invalid]="isInvalid('city')">
+            <label>Città *</label>
+            <input formControlName="city" type="text" placeholder="Milano" />
+            @if (isInvalid('city')) {
+              <span class="err">Campo obbligatorio</span>
+            }
+          </div>
+          <div class="field" [class.invalid]="isInvalid('zip')">
+            <label>CAP *</label>
+            <input formControlName="zip" type="text" placeholder="20121" />
+            @if (isInvalid('zip') && checkoutForm.get('zip')?.errors?.['required']) {
+              <span class="err">CAP obbligatorio</span>
+            }
+            @if (isInvalid('zip') && checkoutForm.get('zip')?.errors?.['pattern']) {
+              <span class="err">CAP deve essere 5 cifre</span>
+            }
+          </div>
+        </div>
+
+        <div class="field" [class.invalid]="isInvalid('country')">
+          <label>Paese *</label>
+          <select formControlName="country">
+            <option value="">-- Seleziona --</option>
+            <option value="IT">Italia</option>
+            <option value="CH">Svizzera</option>
+            <option value="DE">Germania</option>
+            <option value="FR">Francia</option>
+          </select>
+          @if (isInvalid('country')) {
+            <span class="err">Seleziona un paese</span>
+          }
+        </div>
+
+        <div class="checkout-total">
+          Totale ordine: <strong>€ {{ cart.total() }}</strong>
+        </div>
+
+        <button type="submit" class="btn-order" [disabled]="checkoutForm.invalid || submitting()">
+          {{ submitting() ? 'Invio ordine...' : 'Conferma Ordine' }}
+        </button>
+      </form>
+    </div>
+
+    <div class="order-summary">
+      <h3 class="summary-title">Riepilogo</h3>
+      <ul class="summary-list">
+        @for (item of cart.items(); track item.product.id) {
+          <li class="summary-item">
+            <span>{{ item.product.name }} × {{ item.qty }}</span>
+            <span>€ {{ item.product.price * item.qty }}</span>
+          </li>
+        }
+      </ul>
+      <div class="summary-total">
+        <span>Totale</span>
+        <strong>€ {{ cart.total() }}</strong>
+      </div>
+    </div>
+  </div>
+}
+</div>

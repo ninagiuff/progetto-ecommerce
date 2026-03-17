@@ -1,0 +1,52 @@
+<div class="admin-page">
+<div class="admin-header">
+  <h2 class="admin-title">Gestione Prodotti</h2>
+  <div class="admin-actions">
+    <a routerLink="/admin/prodotto/nuovo" class="btn-new">+ Nuovo prodotto</a>
+    <button class="btn-logout" (click)="logout()">Logout</button>
+  </div>
+</div>
+
+<div class="admin-table-wrap">
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Categoria</th>
+        <th>Prezzo</th>
+        <th>Qtà</th>
+        <th>Stato</th>
+        <th>Azioni</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (p of productSvc.products(); track p.id) {
+        <tr [class.row-esaurito]="p.quantity === 0">
+          <td class="td-id">#{{ p.id }}</td>
+          <td class="td-name">
+            <img [src]="p.imageUrl" [alt]="p.name" class="table-img" />
+            {{ p.name }}
+          </td>
+          <td>{{ p.category }}</td>
+          <td>€ {{ p.price }}</td>
+          <td>{{ p.quantity }}</td>
+          <td>
+            @if (p.quantity === 0) {
+              <span class="badge-esaurito">Esaurito</span>
+            } @else {
+              <span class="badge-ok">Disponibile</span>
+            }
+          </td>
+          <td class="td-actions">
+            <a [routerLink]="['/admin/prodotto', p.id]" class="link-edit">Modifica</a>
+            <button class="link-del" (click)="deleteProduct(p)">Elimina</button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
+
+<router-outlet />
+</div>

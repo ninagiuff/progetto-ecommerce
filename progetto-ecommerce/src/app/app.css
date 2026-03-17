@@ -1,0 +1,86 @@
+:host {
+  display: block;
+  font-family: 'Cormorant Garamond', 'Georgia', serif;
+  background: #faf8f5;
+  color: #1a1a1a;
+  min-height: 100vh;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 32px;
+  border-bottom: 1px solid #e8e3dc;
+  background: #faf8f5;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-brand {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-decoration: none;
+  color: #1a1a1a;
+  text-transform: uppercase;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.nav-link {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #6b6156;
+  transition: color 0.2s;
+}
+
+.nav-link:hover { color: #1a1a1a; }
+
+.nav-admin { color: #9b3d1a; }
+
+.nav-cart {
+  position: relative;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #1a1a1a;
+}
+
+.cart-count {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 18px;
+  height: 18px;
+  background: #1a1a1a;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 10px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: system-ui;
+}
+
+.main-content {
+  min-height: calc(100vh - 65px - 60px);
+}
+
+.footer {
+  border-top: 1px solid #e8e3dc;
+  text-align: center;
+  padding: 20px;
+  font-size: 12px;
+  color: #9b8e7d;
+  letter-spacing: 0.1em;
+}

@@ -1,0 +1,31 @@
+<div
+      class="card"
+      [appEsaurito]="product().quantity"
+    >
+      <a [routerLink]="['/prodotto', product().id]" class="card-img-link">
+        <img [src]="product().imageUrl" [alt]="product().name" class="card-img" />
+      </a>
+      <div class="card-body">
+        <span class="card-category">{{ product().category }}</span>
+        <h3 class="card-title">
+          <a [routerLink]="['/prodotto', product().id]">{{ product().name }}</a>
+        </h3>
+        <p class="card-desc">{{ product().description }}</p>
+        <div class="card-footer">
+          <span class="card-price">€ {{ product().price }}</span>
+          <button
+            data-buy-btn
+            class="btn-add"
+            (click)="onAdd()"
+            [disabled]="product().quantity === 0"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <path d="M16 10a4 4 0 01-8 0"/>
+            </svg>
+            Aggiungi
+          </button>
+        </div>
+      </div>
+    </div>

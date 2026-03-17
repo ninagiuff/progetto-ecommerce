@@ -1,0 +1,37 @@
+<div class="cart-panel">
+    <h2 class="cart-title">Carrello <span class="badge">{{ cart.count() }}</span></h2>
+
+    @if (cart.items().length === 0) {
+      <div class="empty">
+        <p>Il carrello è vuoto.</p>
+        <a routerLink="/" class="link-back">← Continua lo shopping</a>
+      </div>
+    } @else {
+      <ul class="cart-list">
+        @for (item of cart.items(); track item.product.id) {
+          <li class="cart-item">
+            <img [src]="item.product.imageUrl" [alt]="item.product.name" class="item-img" />
+            <div class="item-info">
+              <span class="item-name">{{ item.product.name }}</span>
+              <span class="item-price">€ {{ item.product.price }}</span>
+            </div>
+            <div class="item-qty">
+              <button class="qty-btn" (click)="cart.updateQty(item.product.id, item.qty - 1)">−</button>
+              <span class="qty-val">{{ item.qty }}</span>
+              <button class="qty-btn" (click)="cart.updateQty(item.product.id, item.qty + 1)">+</button>
+            </div>
+            <span class="item-subtotal">€ {{ item.product.price * item.qty }}</span>
+            <button class="remove-btn" (click)="cart.remove(item.product.id)" aria-label="Rimuovi">×</button>
+          </li>
+        }
+      </ul>
+      <div class="cart-summary">
+        <div class="total-row">
+          <span>Totale</span>
+          <strong>€ {{ cart.total() }}</strong>
+        </div>
+        <a routerLink="/checkout" class="btn-checkout">Procedi al Checkout →</a>
+        <button class="btn-clear" (click)="cart.clear()">Svuota carrello</button>
+      </div>
+    }
+  </div>

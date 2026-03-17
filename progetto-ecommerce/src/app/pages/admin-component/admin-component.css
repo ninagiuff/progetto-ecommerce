@@ -1,0 +1,36 @@
+.admin-page { max-width: 1100px; margin: 0 auto; padding: 40px 24px; }
+    .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; flex-wrap: wrap; gap: 16px; }
+    .admin-title { font-size: 28px; font-weight: 700; }
+    .admin-actions { display: flex; gap: 12px; }
+    .btn-new {
+      background: #1a1a1a; color: #fff; padding: 10px 20px;
+      border-radius: 3px; text-decoration: none; font-weight: 700; font-size: 14px;
+    }
+    .btn-logout {
+      background: none; border: 1px solid #e8e3dc; padding: 10px 16px;
+      border-radius: 3px; cursor: pointer; font-size: 14px; color: #6b6156;
+    }
+    .btn-logout:hover { border-color: #1a1a1a; color: #1a1a1a; }
+    .admin-table-wrap { overflow-x: auto; }
+    .admin-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .admin-table th {
+      text-align: left; padding: 12px 16px; border-bottom: 2px solid #1a1a1a;
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;
+      color: #6b6156;
+    }
+    .admin-table td { padding: 16px; border-bottom: 1px solid #e8e3dc; vertical-align: middle; }
+    .row-esaurito { opacity: 0.65; }
+    .td-id { color: #9b8e7d; font-size: 13px; }
+    .td-name { display: flex; align-items: center; gap: 12px; font-weight: 600; }
+    .table-img { width: 40px; height: 40px; object-fit: cover; border-radius: 4px; }
+    .badge-esaurito {
+      background: #1a1a1a; color: #fff; padding: 3px 8px;
+      border-radius: 2px; font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+    }
+    .badge-ok {
+      background: #e8f5e9; color: #2d7a3a; padding: 3px 8px;
+      border-radius: 2px; font-size: 10px; font-weight: 700;
+    }
+    .td-actions { display: flex; gap: 12px; }
+    .link-edit { color: #1a1a1a; font-weight: 600; text-decoration: underline; cursor: pointer; background: none; border: none; font-size: 14px; }
+    .link-del { color: #c0392b; font-weight: 600; background: none; border: none; font-size: 14px; cursor: pointer; text-decoration: underline; }

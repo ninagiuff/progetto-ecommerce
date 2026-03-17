@@ -1,0 +1,106 @@
+<div class="form-page">
+    <a routerLink="/admin" class="back-link">← Gestione prodotti</a>
+    <h2 class="form-title">{{ isEdit() ? 'Modifica' : 'Nuovo' }} Prodotto</h2>
+
+    <form #f="ngForm" (ngSubmit)="onSubmit(f)" class="product-form" novalidate>
+
+      <!-- Nome -->
+      <div class="field" [class.invalid]="name.invalid && name.touched">
+        <label for="name">Nome *</label>
+        <input
+          id="name" name="name" type="text"
+          [(ngModel)]="formData.name"
+          #name="ngModel"
+          required minlength="3"
+          placeholder="Nome prodotto"
+        />
+        @if (name.touched && name.errors?.['required']) {
+          <span class="err">Il nome è obbligatorio</span>
+        }
+        @if (name.touched && name.errors?.['minlength']) {
+          <span class="err">Minimo 3 caratteri</span>
+        }
+      </div>
+
+      <!-- Descrizione -->
+      <div class="field">
+        <label for="description">Descrizione</label>
+        <textarea
+          id="description" name="description"
+          [(ngModel)]="formData.description"
+          rows="3" placeholder="Descrizione del prodotto"
+        ></textarea>
+      </div>
+
+      <!-- Prezzo -->
+      <div class="field-row">
+        <div class="field" [class.invalid]="price.invalid && price.touched">
+          <label for="price">Prezzo (€) *</label>
+          <input
+            id="price" name="price" type="number"
+            [(ngModel)]="formData.price"
+            #price="ngModel"
+            required min="0.01" step="0.01"
+            placeholder="0.00"
+          />
+          @if (price.touched && price.errors?.['required']) {
+            <span class="err">Il prezzo è obbligatorio</span>
+          }
+          @if (price.touched && price.errors?.['min']) {
+            <span class="err">Il prezzo deve essere positivo</span>
+          }
+        </div>
+
+        <!-- Quantità -->
+        <div class="field" [class.invalid]="qty.invalid && qty.touched">
+          <label for="quantity">Quantità *</label>
+          <input
+            id="quantity" name="quantity" type="number"
+            [(ngModel)]="formData.quantity"
+            #qty="ngModel"
+            required min="0"
+            placeholder="0"
+          />
+          @if (qty.touched && qty.errors?.['required']) {
+            <span class="err">La quantità è obbligatoria</span>
+          }
+        </div>
+      </div>
+
+      <!-- Categoria -->
+      <div class="field">
+        <label for="category">Categoria</label>
+        <select id="category" name="category" [(ngModel)]="formData.category">
+          <option value="Accessori">Accessori</option>
+          <option value="Borse">Borse</option>
+          <option value="Scarpe">Scarpe</option>
+          <option value="Cappelli">Cappelli</option>
+          <option value="Altro">Altro</option>
+        </select>
+      </div>
+
+      <!-- Image URL -->
+      <div class="field">
+        <label for="imageUrl">URL Immagine</label>
+        <input
+          id="imageUrl" name="imageUrl" type="url"
+          [(ngModel)]="formData.imageUrl"
+          placeholder="https://..."
+        />
+      </div>
+
+      @if (successMsg()) {
+        <div class="success-msg">✓ {{ successMsg() }}</div>
+      }
+      @if (errorMsg()) {
+        <div class="error-msg">✗ {{ errorMsg() }}</div>
+      }
+
+      <div class="form-actions">
+        <button type="submit" class="btn-save" [disabled]="f.invalid || saving()">
+          {{ saving() ? 'Salvataggio...' : (isEdit() ? 'Aggiorna' : 'Crea Prodotto') }}
+        </button>
+        <a routerLink="/admin" class="btn-cancel">Annulla</a>
+      </div>
+    </form>
+  </div>

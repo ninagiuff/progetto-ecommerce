@@ -1,0 +1,37 @@
+<div class="detail-page">
+<a routerLink="/" class="back-link">← Tutti i prodotti</a>
+
+@if (loading()) {
+  <div class="loading">Caricamento...</div>
+} @else if (product()) {
+  <div class="detail-grid" [appEsaurito]="product()!.quantity">
+    <div class="detail-img-wrap">
+      <img [src]="product()!.imageUrl" [alt]="product()!.name" class="detail-img" />
+    </div>
+    <div class="detail-info">
+      <span class="detail-category">{{ product()!.category }}</span>
+      <h1 class="detail-title">{{ product()!.name }}</h1>
+      <p class="detail-desc">{{ product()!.description }}</p>
+      <div class="detail-meta">
+        <span class="detail-price">€ {{ product()!.price }}</span>
+        @if (product()!.quantity > 0) {
+          <span class="stock-ok">✓ Disponibile ({{ product()!.quantity }} pz)</span>
+        }
+      </div>
+      <button
+        data-buy-btn
+        class="btn-detail-add"
+        (click)="addToCart()"
+        [disabled]="product()!.quantity === 0"
+      >
+        Aggiungi al carrello
+      </button>
+      @if (added()) {
+        <p class="added-msg">✓ Aggiunto al carrello!</p>
+      }
+    </div>
+  </div>
+} @else {
+  <p class="not-found">Prodotto non trovato.</p>
+}
+</div>
