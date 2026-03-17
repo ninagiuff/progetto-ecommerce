@@ -1,106 +1,87 @@
-<div class="form-page">
-    <a routerLink="/admin" class="back-link">← Gestione prodotti</a>
-    <h2 class="form-title">{{ isEdit() ? 'Modifica' : 'Nuovo' }} Prodotto</h2>
+<h2 class="text-2xl font-bold mb-6">{{ isEdit() ? 'Modifica' : 'Nuovo' }} Prodotto</h2>
 
-    <form #f="ngForm" (ngSubmit)="onSubmit(f)" class="product-form" novalidate>
+<form #f="ngForm" (ngSubmit)="onSubmit(f)" class="flex flex-col gap-4 max-w-lg" novalidate>
 
-      <!-- Nome -->
-      <div class="field" [class.invalid]="name.invalid && name.touched">
-        <label for="name">Nome *</label>
-        <input
-          id="name" name="name" type="text"
-          [(ngModel)]="formData.name"
-          #name="ngModel"
-          required minlength="3"
-          placeholder="Nome prodotto"
-        />
-        @if (name.touched && name.errors?.['required']) {
-          <span class="err">Il nome è obbligatorio</span>
-        }
-        @if (name.touched && name.errors?.['minlength']) {
-          <span class="err">Minimo 3 caratteri</span>
-        }
-      </div>
-
-      <!-- Descrizione -->
-      <div class="field">
-        <label for="description">Descrizione</label>
-        <textarea
-          id="description" name="description"
-          [(ngModel)]="formData.description"
-          rows="3" placeholder="Descrizione del prodotto"
-        ></textarea>
-      </div>
-
-      <!-- Prezzo -->
-      <div class="field-row">
-        <div class="field" [class.invalid]="price.invalid && price.touched">
-          <label for="price">Prezzo (€) *</label>
-          <input
-            id="price" name="price" type="number"
-            [(ngModel)]="formData.price"
-            #price="ngModel"
-            required min="0.01" step="0.01"
-            placeholder="0.00"
-          />
-          @if (price.touched && price.errors?.['required']) {
-            <span class="err">Il prezzo è obbligatorio</span>
-          }
-          @if (price.touched && price.errors?.['min']) {
-            <span class="err">Il prezzo deve essere positivo</span>
-          }
-        </div>
-
-        <!-- Quantità -->
-        <div class="field" [class.invalid]="qty.invalid && qty.touched">
-          <label for="quantity">Quantità *</label>
-          <input
-            id="quantity" name="quantity" type="number"
-            [(ngModel)]="formData.quantity"
-            #qty="ngModel"
-            required min="0"
-            placeholder="0"
-          />
-          @if (qty.touched && qty.errors?.['required']) {
-            <span class="err">La quantità è obbligatoria</span>
-          }
-        </div>
-      </div>
-
-      <!-- Categoria -->
-      <div class="field">
-        <label for="category">Categoria</label>
-        <select id="category" name="category" [(ngModel)]="formData.category">
-          <option value="Accessori">Accessori</option>
-          <option value="Borse">Borse</option>
-          <option value="Scarpe">Scarpe</option>
-          <option value="Cappelli">Cappelli</option>
-          <option value="Altro">Altro</option>
-        </select>
-      </div>
-
-      <!-- Image URL -->
-      <div class="field">
-        <label for="imageUrl">URL Immagine</label>
-        <input
-          id="imageUrl" name="imageUrl" type="url"
-          [(ngModel)]="formData.imageUrl"
-          placeholder="https://..."
-        />
-      </div>
-
-      @if (successMsg()) {
-        <div class="success-msg">✓ {{ successMsg() }}</div>
-      }
-      @if (errorMsg()) {
-        <div class="error-msg">✗ {{ errorMsg() }}</div>
-      }
-
-      <div class="form-actions">
-        <button type="submit" class="btn-save" [disabled]="f.invalid || saving()">
-          {{ saving() ? 'Salvataggio...' : (isEdit() ? 'Aggiorna' : 'Crea Prodotto') }}
-        </button>
-        <a routerLink="/admin" class="btn-cancel">Annulla</a>
-      </div>
-    </form>
+  <div>
+    <label class="block text-sm text-gray-600 mb-1">Nome *</label>
+    <input name="name" type="text" [(ngModel)]="formData.name" #name="ngModel"
+      required minlength="3" placeholder="Nome prodotto"
+      class="w-full border rounded px-3 py-2 focus:outline-none focus:border-blue-500"
+      [class.border-red-400]="name.invalid && name.touched" />
+    @if (name.touched && name.errors?.['required']) {
+      <span class="text-red-500 text-xs">Il nome è obbligatorio</span>
+    }
+    @if (name.touched && name.errors?.['minlength']) {
+      <span class="text-red-500 text-xs">Minimo 3 caratteri</span>
+    }
   </div>
+
+  <div>
+    <label class="block text-sm text-gray-600 mb-1">Descrizione</label>
+    <textarea name="description" [(ngModel)]="formData.description" rows="3"
+      placeholder="Descrizione del prodotto"
+      class="w-full border rounded px-3 py-2 focus:outline-none focus:border-blue-500 resize-none">
+    </textarea>
+  </div>
+
+  <div class="grid grid-cols-2 gap-4">
+    <div>
+      <label class="block text-sm text-gray-600 mb-1">Prezzo (€) *</label>
+      <input name="price" type="number" [(ngModel)]="formData.price" #price="ngModel"
+        required min="0.01" step="0.01" placeholder="0.00"
+        class="w-full border rounded px-3 py-2 focus:outline-none focus:border-blue-500"
+        [class.border-red-400]="price.invalid && price.touched" />
+      @if (price.touched && price.errors?.['required']) {
+        <span class="text-red-500 text-xs">Obbligatorio</span>
+      }
+      @if (price.touched && price.errors?.['min']) {
+        <span class="text-red-500 text-xs">Deve essere positivo</span>
+      }
+    </div>
+    <div>
+      <label class="block text-sm text-gray-600 mb-1">Quantità *</label>
+      <input name="quantity" type="number" [(ngModel)]="formData.quantity" #qty="ngModel"
+        required min="0" placeholder="0"
+        class="w-full border rounded px-3 py-2 focus:outline-none focus:border-blue-500"
+        [class.border-red-400]="qty.invalid && qty.touched" />
+      @if (qty.touched && qty.errors?.['required']) {
+        <span class="text-red-500 text-xs">Obbligatorio</span>
+      }
+    </div>
+  </div>
+
+  <div>
+    <label class="block text-sm text-gray-600 mb-1">Categoria</label>
+    <select name="category" [(ngModel)]="formData.category"
+      class="w-full border rounded px-3 py-2 focus:outline-none focus:border-blue-500 bg-white">
+      <option value="Accessori">Accessori</option>
+      <option value="Borse">Borse</option>
+      <option value="Scarpe">Scarpe</option>
+      <option value="Cappelli">Cappelli</option>
+      <option value="Altro">Altro</option>
+    </select>
+  </div>
+
+  <div>
+    <label class="block text-sm text-gray-600 mb-1">URL Immagine</label>
+    <input name="imageUrl" type="url" [(ngModel)]="formData.imageUrl"
+      placeholder="https://..."
+      class="w-full border rounded px-3 py-2 focus:outline-none focus:border-blue-500" />
+  </div>
+
+  @if (successMsg()) {
+    <p class="text-green-600 text-sm">✓ {{ successMsg() }}</p>
+  }
+  @if (errorMsg()) {
+    <p class="text-red-500 text-sm">✗ {{ errorMsg() }}</p>
+  }
+
+  <div class="flex items-center gap-4">
+    <button type="submit" [disabled]="f.invalid || saving()"
+      class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed">
+      {{ saving() ? 'Salvataggio...' : (isEdit() ? 'Aggiorna' : 'Crea') }}
+    </button>
+    <a routerLink="/admin" class="text-gray-500 hover:underline text-sm">Annulla</a>
+  </div>
+
+</form>

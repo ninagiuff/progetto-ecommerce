@@ -17,11 +17,6 @@
   margin-bottom: 16px;
 }
 
-.hero-title em {
-  font-style: italic;
-  font-weight: 300;
-}
-
 .hero-sub {
   font-size: 14px;
   letter-spacing: 0.15em;
@@ -29,31 +24,3 @@
   color: #9b8e7d;
 }
 
-.products-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 32px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.loading-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 32px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.skeleton-card {
-  background: linear-gradient(90deg, #f5f0ea 25%, #ede8e2 50%, #f5f0ea 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-  height: 360px;
-  border-radius: 4px;
-}
-
-@keyframes shimmer {
-  0%   { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}

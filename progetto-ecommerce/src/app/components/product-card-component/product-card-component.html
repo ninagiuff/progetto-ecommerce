@@ -1,31 +1,32 @@
-<div
-      class="card"
-      [appEsaurito]="product().quantity"
-    >
-      <a [routerLink]="['/prodotto', product().id]" class="card-img-link">
-        <img [src]="product().imageUrl" [alt]="product().name" class="card-img" />
+<div class="bg-white rounded-lg shadow p-4 flex flex-col gap-3">
+  <div class="relative">
+    <img [src]="product().imageUrl" [alt]="product().name" class="w-full h-48 object-cover rounded" />
+    @if (product().quantity === 0) {
+      <span class="absolute top-2 right-2 bg-gray-800 text-white text-xs px-2 py-1 rounded">
+        Esaurito
+      </span>
+    }
+  </div>
+
+  <div>
+    <span class="text-xs text-gray-400 uppercase">{{ product().category }}</span>
+    <h3 class="font-semibold text-gray-800 mt-1">
+      <a [routerLink]="['/prodotto', product().id]" class="hover:underline">
+        {{ product().name }}
       </a>
-      <div class="card-body">
-        <span class="card-category">{{ product().category }}</span>
-        <h3 class="card-title">
-          <a [routerLink]="['/prodotto', product().id]">{{ product().name }}</a>
-        </h3>
-        <p class="card-desc">{{ product().description }}</p>
-        <div class="card-footer">
-          <span class="card-price">€ {{ product().price }}</span>
-          <button
-            data-buy-btn
-            class="btn-add"
-            (click)="onAdd()"
-            [disabled]="product().quantity === 0"
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
-              <line x1="3" y1="6" x2="21" y2="6"/>
-              <path d="M16 10a4 4 0 01-8 0"/>
-            </svg>
-            Aggiungi
-          </button>
-        </div>
-      </div>
-    </div>
+    </h3>
+    <p class="text-sm text-gray-500 mt-1">{{ product().description }}</p>
+  </div>
+
+  <div class="flex items-center justify-between mt-auto">
+    <span class="text-lg font-bold">€ {{ product().price }}</span>
+    <button
+      data-buy-btn
+      (click)="onAdd()"
+      [appEsaurito]="product().quantity"
+      class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+    >
+      Aggiungi
+    </button>
+  </div>
+</div>

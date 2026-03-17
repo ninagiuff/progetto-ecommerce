@@ -17,4 +17,8 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.auth.checkSession();
   }
+
+  logout(): void {
+    this.auth.logout();
+  }
 }

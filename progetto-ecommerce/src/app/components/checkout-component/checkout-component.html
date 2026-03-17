@@ -1,116 +1,116 @@
-<div class="checkout-page">
-<a routerLink="/carrello" class="back-link">← Torna al carrello</a>
+<h2 class="text-2xl font-bold mb-6">Checkout</h2>
 
 @if (orderDone()) {
-  <div class="order-success">
-    <div class="success-icon">✓</div>
-    <h2>Ordine confermato!</h2>
-    <p>Il tuo ordine n° <strong>{{ orderId() }}</strong> è stato ricevuto.</p>
-    <p>Riceverai una email di conferma all'indirizzo indicato.</p>
-    <a routerLink="/" class="btn-home">Torna al negozio</a>
+  <div class="bg-green-50 border border-green-200 rounded-lg p-8 text-center">
+    <p class="text-2xl mb-2">✓ Ordine confermato!</p>
+    <p class="text-gray-600 mb-4">Ordine n° <strong>{{ orderId() }}</strong> ricevuto con successo.</p>
+    <a routerLink="/" class="text-blue-600 hover:underline">Torna al negozio</a>
   </div>
 } @else {
-  <div class="checkout-grid">
-    <div class="checkout-form-wrap">
-      <h2 class="checkout-title">Dati di spedizione</h2>
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
 
-      <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()" class="checkout-form" novalidate>
+    <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-4" novalidate>
+      <h3 class="text-lg font-semibold">Dati di spedizione</h3>
 
-        <div class="field-row">
-          <div class="field" [class.invalid]="isInvalid('firstName')">
-            <label>Nome *</label>
-            <input formControlName="firstName" type="text" placeholder="Mario" />
-            @if (isInvalid('firstName')) {
-              <span class="err">Campo obbligatorio</span>
-            }
-          </div>
-          <div class="field" [class.invalid]="isInvalid('lastName')">
-            <label>Cognome *</label>
-            <input formControlName="lastName" type="text" placeholder="Rossi" />
-            @if (isInvalid('lastName')) {
-              <span class="err">Campo obbligatorio</span>
-            }
-          </div>
-        </div>
-
-        <div class="field" [class.invalid]="isInvalid('email')">
-          <label>Email *</label>
-          <input formControlName="email" type="email" placeholder="mario@esempio.it" />
-          @if (isInvalid('email') && checkoutForm.get('email')?.errors?.['required']) {
-            <span class="err">Email obbligatoria</span>
-          }
-          @if (isInvalid('email') && checkoutForm.get('email')?.errors?.['email']) {
-            <span class="err">Email non valida</span>
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm text-gray-600 mb-1">Nome *</label>
+          <input formControlName="firstName" type="text" placeholder="Mario"
+            class="w-full border rounded px-3 py-2 focus:outline-none focus:border-blue-500"
+            [class.border-red-400]="isInvalid('firstName')" />
+          @if (isInvalid('firstName')) {
+            <span class="text-red-500 text-xs">Obbligatorio</span>
           }
         </div>
-
-        <div class="field" [class.invalid]="isInvalid('address')">
-          <label>Indirizzo *</label>
-          <input formControlName="address" type="text" placeholder="Via Roma 1" />
-          @if (isInvalid('address')) {
-            <span class="err">Campo obbligatorio</span>
+        <div>
+          <label class="block text-sm text-gray-600 mb-1">Cognome *</label>
+          <input formControlName="lastName" type="text" placeholder="Rossi"
+            class="w-full border rounded px-3 py-2 focus:outline-none focus:border-blue-500"
+            [class.border-red-400]="isInvalid('lastName')" />
+          @if (isInvalid('lastName')) {
+            <span class="text-red-500 text-xs">Obbligatorio</span>
           }
         </div>
+      </div>
 
-        <div class="field-row">
-          <div class="field" [class.invalid]="isInvalid('city')">
-            <label>Città *</label>
-            <input formControlName="city" type="text" placeholder="Milano" />
-            @if (isInvalid('city')) {
-              <span class="err">Campo obbligatorio</span>
-            }
-          </div>
-          <div class="field" [class.invalid]="isInvalid('zip')">
-            <label>CAP *</label>
-            <input formControlName="zip" type="text" placeholder="20121" />
-            @if (isInvalid('zip') && checkoutForm.get('zip')?.errors?.['required']) {
-              <span class="err">CAP obbligatorio</span>
-            }
-            @if (isInvalid('zip') && checkoutForm.get('zip')?.errors?.['pattern']) {
-              <span class="err">CAP deve essere 5 cifre</span>
-            }
-          </div>
-        </div>
+      <div>
+        <label class="block text-sm text-gray-600 mb-1">Email *</label>
+        <input formControlName="email" type="email" placeholder="mario@esempio.it"
+          class="w-full border rounded px-3 py-2 focus:outline-none focus:border-blue-500"
+          [class.border-red-400]="isInvalid('email')" />
+        @if (isInvalid('email')) {
+          <span class="text-red-500 text-xs">Email non valida</span>
+        }
+      </div>
 
-        <div class="field" [class.invalid]="isInvalid('country')">
-          <label>Paese *</label>
-          <select formControlName="country">
-            <option value="">-- Seleziona --</option>
-            <option value="IT">Italia</option>
-            <option value="CH">Svizzera</option>
-            <option value="DE">Germania</option>
-            <option value="FR">Francia</option>
-          </select>
-          @if (isInvalid('country')) {
-            <span class="err">Seleziona un paese</span>
+      <div>
+        <label class="block text-sm text-gray-600 mb-1">Indirizzo *</label>
+        <input formControlName="address" type="text" placeholder="Via Roma 1"
+          class="w-full border rounded px-3 py-2 focus:outline-none focus:border-blue-500"
+          [class.border-red-400]="isInvalid('address')" />
+        @if (isInvalid('address')) {
+          <span class="text-red-500 text-xs">Obbligatorio</span>
+        }
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm text-gray-600 mb-1">Città *</label>
+          <input formControlName="city" type="text" placeholder="Milano"
+            class="w-full border rounded px-3 py-2 focus:outline-none focus:border-blue-500"
+            [class.border-red-400]="isInvalid('city')" />
+          @if (isInvalid('city')) {
+            <span class="text-red-500 text-xs">Obbligatorio</span>
           }
         </div>
-
-        <div class="checkout-total">
-          Totale ordine: <strong>€ {{ cart.total() }}</strong>
+        <div>
+          <label class="block text-sm text-gray-600 mb-1">CAP *</label>
+          <input formControlName="zip" type="text" placeholder="20121"
+            class="w-full border rounded px-3 py-2 focus:outline-none focus:border-blue-500"
+            [class.border-red-400]="isInvalid('zip')" />
+          @if (isInvalid('zip')) {
+            <span class="text-red-500 text-xs">CAP non valido (5 cifre)</span>
+          }
         </div>
+      </div>
 
-        <button type="submit" class="btn-order" [disabled]="checkoutForm.invalid || submitting()">
-          {{ submitting() ? 'Invio ordine...' : 'Conferma Ordine' }}
-        </button>
-      </form>
-    </div>
+      <div>
+        <label class="block text-sm text-gray-600 mb-1">Paese *</label>
+        <select formControlName="country"
+          class="w-full border rounded px-3 py-2 focus:outline-none focus:border-blue-500 bg-white"
+          [class.border-red-400]="isInvalid('country')">
+          <option value="">-- Seleziona --</option>
+          <option value="IT">Italia</option>
+          <option value="CH">Svizzera</option>
+          <option value="DE">Germania</option>
+          <option value="FR">Francia</option>
+        </select>
+        @if (isInvalid('country')) {
+          <span class="text-red-500 text-xs">Obbligatorio</span>
+        }
+      </div>
 
-    <div class="order-summary">
-      <h3 class="summary-title">Riepilogo</h3>
-      <ul class="summary-list">
+      <button type="submit" [disabled]="checkoutForm.invalid || submitting()"
+        class="bg-blue-600 text-white py-3 rounded hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed font-semibold mt-2">
+        {{ submitting() ? 'Invio in corso...' : 'Conferma ordine' }}
+      </button>
+    </form>
+
+    <div class="bg-gray-50 rounded-lg p-6">
+      <h3 class="text-lg font-semibold mb-4">Riepilogo ordine</h3>
+      <div class="flex flex-col gap-2 mb-4">
         @for (item of cart.items(); track item.product.id) {
-          <li class="summary-item">
+          <div class="flex justify-between text-sm">
             <span>{{ item.product.name }} × {{ item.qty }}</span>
             <span>€ {{ item.product.price * item.qty }}</span>
-          </li>
+          </div>
         }
-      </ul>
-      <div class="summary-total">
+      </div>
+      <div class="flex justify-between font-bold border-t pt-3">
         <span>Totale</span>
-        <strong>€ {{ cart.total() }}</strong>
+        <span>€ {{ cart.total() }}</span>
       </div>
     </div>
+
   </div>
 }
-</div>

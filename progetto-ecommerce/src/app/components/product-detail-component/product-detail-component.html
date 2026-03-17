@@ -1,37 +1,36 @@
-<div class="detail-page">
-<a routerLink="/" class="back-link">← Tutti i prodotti</a>
+<a routerLink="/" class="text-blue-600 hover:underline text-sm">← Torna ai prodotti</a>
 
 @if (loading()) {
-  <div class="loading">Caricamento...</div>
+  <p class="mt-8 text-gray-500">Caricamento...</p>
 } @else if (product()) {
-  <div class="detail-grid" [appEsaurito]="product()!.quantity">
-    <div class="detail-img-wrap">
-      <img [src]="product()!.imageUrl" [alt]="product()!.name" class="detail-img" />
-    </div>
-    <div class="detail-info">
-      <span class="detail-category">{{ product()!.category }}</span>
-      <h1 class="detail-title">{{ product()!.name }}</h1>
-      <p class="detail-desc">{{ product()!.description }}</p>
-      <div class="detail-meta">
-        <span class="detail-price">€ {{ product()!.price }}</span>
-        @if (product()!.quantity > 0) {
-          <span class="stock-ok">✓ Disponibile ({{ product()!.quantity }} pz)</span>
-        }
-      </div>
+  <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+    <img [src]="product()!.imageUrl" [alt]="product()!.name" class="w-full rounded-lg shadow" />
+
+    <div class="flex flex-col gap-4">
+      <span class="text-sm text-gray-400 uppercase">{{ product()!.category }}</span>
+      <h1 class="text-3xl font-bold">{{ product()!.name }}</h1>
+      <p class="text-gray-600">{{ product()!.description }}</p>
+      <span class="text-3xl font-bold">€ {{ product()!.price }}</span>
+
+      @if (product()!.quantity > 0) {
+        <span class="text-green-600 text-sm">✓ Disponibile ({{ product()!.quantity }} pz)</span>
+      } @else {
+        <span class="text-red-500 text-sm">Esaurito</span>
+      }
+
       <button
-        data-buy-btn
-        class="btn-detail-add"
         (click)="addToCart()"
-        [disabled]="product()!.quantity === 0"
+        [appEsaurito]="product()!.quantity"
+        class="bg-blue-600 text-white py-3 rounded hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed font-semibold"
       >
         Aggiungi al carrello
       </button>
+
       @if (added()) {
-        <p class="added-msg">✓ Aggiunto al carrello!</p>
+        <p class="text-green-600 text-sm">✓ Aggiunto al carrello!</p>
       }
     </div>
   </div>
 } @else {
-  <p class="not-found">Prodotto non trovato.</p>
+  <p class="mt-8 text-gray-500">Prodotto non trovato.</p>
 }
-</div>

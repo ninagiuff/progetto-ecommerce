@@ -1,29 +1,28 @@
-<nav class="nav">
-  <a routerLink="/" class="nav-brand">E-COMMERCE</a>
-  <div class="nav-links">
-    <a routerLink="/" class="nav-link">Vetrina</a>
+<nav class="bg-white shadow px-6 py-4 flex items-center justify-between">
+  <a routerLink="/" class="text-xl font-bold text-gray-800">E-COMMERCE</a>
+  <div class="flex items-center gap-6">
+    <a routerLink="/" class="text-gray-600 hover:text-gray-900">Prodotti</a>
     @if (auth.isAdmin()) {
-      <a routerLink="/admin" class="nav-link nav-admin">Admin</a>
+      <a routerLink="/admin" class="text-gray-600 hover:text-gray-900">Admin</a>
+      <button (click)="logout()" class="text-gray-600 hover:text-gray-900">Logout</button>
     } @else {
-      <a routerLink="/login" class="nav-link">Login</a>
+      <a routerLink="/login" class="text-gray-600 hover:text-gray-900">Login</a>
     }
-    <a routerLink="/carrello" class="nav-cart">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
-        <line x1="3" y1="6" x2="21" y2="6"/>
-        <path d="M16 10a4 4 0 01-8 0"/>
-      </svg>
+    <a routerLink="/carrello" class="relative text-gray-800">
+      🛒
       @if (cart.count() > 0) {
-        <span class="cart-count">{{ cart.count() }}</span>
+        <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+          {{ cart.count() }}
+        </span>
       }
     </a>
   </div>
 </nav>
 
-<main class="main-content">
+<main class="container mx-auto px-4 py-8">
   <router-outlet />
 </main>
 
-<footer class="footer">
-  <p>© 2025 E-COMMERCE · Made in Italy</p>
+<footer class="text-center py-6 text-gray-400 text-sm border-t mt-8">
+  © 2025 E-COMMERCE
 </footer>
