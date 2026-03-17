@@ -57,6 +57,7 @@ export class AuthService {
   }
 
   getToken(): string | null {
-    return this._token();
+    // Prima legge dal signal in memoria, poi dal localStorage come fallback
+    return this._token() ?? localStorage.getItem('auth_token');
   }
 }
